@@ -1,0 +1,49 @@
+= Using Middleman with GitHub Pages
+
+++++
+<a href="/"><img src="https://img.shields.io/badge/english-%F0%9F%87%AC%F0%9F%87%A7-blue"></a>
+<a href="README.es.adoc"><img src="https://img.shields.io/badge/espa%C3%B1ol-%F0%9F%87%AA%F0%9F%87%B8-yellow"></a>
+<a href="README.it.adoc"><img src="https://img.shields.io/badge/italiano-%F0%9F%87%AE%F0%9F%87%B9-white"></a>
+++++
+
+* Create your repo
+* Setup bundle and add middleman
+```bash
+bundle init
+bundle add middleman
+```
+* Intitialize Middleman. (If prompted to overwrite your Gemfile that's fine as long as it is a new project)
+```bash
+bundle exec middleman init
+```
+* Change the default build folder name to docs by editing the config.rb and adding:
+```ruby
+set :build_dir, 'docs'
+configure :build do
+  set :http_prefix, "/middleman-github-pages" # <-- your repo name here
+end
+```
+* Create initial build of your static site.
+```bash
+bundle exec middleman build
+git add .
+git commit -m "uploads build to github"
+git push
+```
+* Configure GitHub pages to serve from your branch and the /docs folder
+++++
+<img src='https://github.com/wkirk-git/middleman-github-pages/blob/main/ghp.png'>
+++++
+* Voilà! You can see your new middleman site at your respective GitHub Pages url https://wkirk-git.github.io/middleman-github-pages/
+
+* You can of course also just clone this repo, change your origin, build and push, and then configure your page as well to save some time:
+```bash
+git clone git@github.com:wkirk-git/middleman-github-pages.git
+cd middleman-github-pages
+bundle install
+bundle exec middleman build
+git add .
+git commit -m "uploads build to github"
+git remote add origin git@github.com:<your-user-name>/<your-repo>.git
+git push -u origin main
+```

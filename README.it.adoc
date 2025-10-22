@@ -1,0 +1,47 @@
+= Utilizzo di Middleman con GitHub Pagine
+
+++++
+<a href="/"><img src="https://img.shields.io/badge/english-%F0%9F%87%AC%F0%9F%87%A7-blue"></a>
+++++
+
+* Crea il tuo repo
+* Setup bundle e aggiungere middleman
+```bash
+bundle init
+bundle add middleman
+```
+* Intializzare Middleman. (Se richiesto di sovrascrivere il vostro Gemfile che va bene fino a quando è un nuovo progetto)
+```bash
+bundle exec middleman init
+```
+* Modificare il nome della cartella di compilazione predefinita ai documenti modificando il config.rb e aggiungendo:
+```ruby
+set :build_dir, 'docs'
+configure :build do
+  set :http_prefix, "/middleman-github-pages" # <-- il tuo nome da repo qui
+end
+```
+* Crea la costruzione iniziale del tuo sito statico.
+```bash
+bundle exec middleman build
+git add .
+git commit -m "uploads costruire a github"
+git push
+```
+* Configurare le pagine GitHub per servire dal tuo ramo e dalla cartella /docs
+++++
+<img src='https://github.com/wkirk-git/middleman-github-pages/blob/main/ghp.png'>
+++++
+* Voilà! Puoi vedere il tuo nuovo sito di middleman nelle tue rispettive pagine GitHub url https://wkirk-git.github.io/middleman-github-pages/
+
+* Naturalmente puoi anche solo clonare questo repo, cambiare la tua origine, costruire e spingere, e poi configurare la tua pagina pure per risparmiare tempo:
+```bash
+git clone git@github.com:wkirk-git/middleman-github-pages.git
+cd middleman-github-pages
+bundle install
+bundle exec middleman build
+git add .
+git commit -m "uploads costruire a github"
+git remote add origin git@github.com:<il-tuo-nome-utente/<il-tuo-repoo>.git
+git push -u origin main
+```
